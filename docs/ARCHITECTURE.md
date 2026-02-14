@@ -7,6 +7,7 @@
 
 ## Navigation
 - Current: dependency-light route switcher in `AppNavigator` with clickable route chips.
+- Provider composition root: `AppRoot` wraps theme + user-preferences stores around navigation.
 - Planned Root Stack:
   - Onboarding
   - MainTabs
@@ -20,8 +21,9 @@
 2. `components/` – reusable UI units
 3. `content/` – verse selection, source mix, and prefetch cache selectors
 4. `audio/` – session planning, TTS provider abstraction, ducking config
-5. `data/` (future) – repositories for local/remote data
-6. `theme/` – design tokens and provider
+5. `preferences/` – shared user preference store + update actions
+6. `data/` (future) – repositories for local/remote data
+7. `theme/` – design tokens and provider
 
 ## Current Core Flows
 - Daily card picks a deterministic verse from selected sources.
@@ -29,6 +31,8 @@
 - No-repeat window is enforced from user history with fallback when pool is exhausted.
 - Seven-day cache helper precomputes deterministic verse cards for offline preparation.
 - Daily screen header surfaces date/source context and shares current audio preference values.
+- Archive screen uses deterministic 7-day cache generation from current preference state.
+- Onboarding/settings update shared language/music preferences through a central store.
 
 ## Merge conflict resolution note
 - Consolidated the branch state for the following files into one coherent baseline:

@@ -12,11 +12,13 @@ This repository contains a **TypeScript-first React Native starter architecture*
 - Audio service scaffolding for narration + ducking-aware music session planning
 - Theme tokens and provider scaffolding for light/dark/pastel modes
 - Conflict-safe consolidated navigation and daily-screen baseline
+- Shared user preference store wired across onboarding, daily, archive, and settings
 
 ## Proposed folder structure
 
 ```text
 src/
+  AppRoot.tsx
   audio/
     AudioPlayerService.ts
     TTSService.ts
@@ -34,9 +36,12 @@ src/
   navigation/
     AppNavigator.tsx
   screens/
+    ArchiveScreen.tsx
     DailyCardScreen.tsx
     OnboardingFlow.tsx
     SettingsScreen.tsx
+  preferences/
+    UserPreferencesStore.tsx
   theme/
     ThemeProvider.tsx
     tokens.ts
@@ -60,7 +65,9 @@ src/
 - `AppNavigator` now includes an interactive in-memory route switcher for:
   - Onboarding
   - Daily Card
+  - Archive
   - Settings
+- `AppRoot` composes `AppThemeProvider` + `UserPreferencesProvider` so all screens share preference state.
 - This keeps the starter runnable without external navigation dependencies while preserving a realistic screen split.
 
 ## Next build steps

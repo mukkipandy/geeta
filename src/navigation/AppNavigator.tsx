@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
+import { ArchiveScreen } from '../screens/ArchiveScreen';
 import { DailyCardScreen } from '../screens/DailyCardScreen';
 import { OnboardingFlow } from '../screens/OnboardingFlow';
 import { SettingsScreen } from '../screens/SettingsScreen';
 import { useAppTheme } from '../theme/ThemeProvider';
 
-export type Route = 'onboarding' | 'daily' | 'settings';
+export type Route = 'onboarding' | 'daily' | 'archive' | 'settings';
 
 interface NavButtonProps {
   label: string;
@@ -43,6 +44,7 @@ export function AppNavigator() {
         style={{
           flexDirection: 'row',
           alignItems: 'center',
+          flexWrap: 'wrap',
           gap: 8,
           paddingHorizontal: 10,
           paddingVertical: 8,
@@ -52,11 +54,13 @@ export function AppNavigator() {
         <Text style={{ color: '#FFFFFF', fontSize: 12, marginRight: 4 }}>Route</Text>
         <NavButton label="Onboarding" active={route === 'onboarding'} onPress={() => setRoute('onboarding')} />
         <NavButton label="Daily" active={route === 'daily'} onPress={() => setRoute('daily')} />
+        <NavButton label="Archive" active={route === 'archive'} onPress={() => setRoute('archive')} />
         <NavButton label="Settings" active={route === 'settings'} onPress={() => setRoute('settings')} />
       </View>
 
       {route === 'onboarding' ? <OnboardingFlow /> : null}
       {route === 'daily' ? <DailyCardScreen /> : null}
+      {route === 'archive' ? <ArchiveScreen /> : null}
       {route === 'settings' ? <SettingsScreen /> : null}
     </View>
   );
