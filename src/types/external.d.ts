@@ -16,4 +16,5 @@ declare module 'react-native' {
   export const View: any;
   export const Text: any;
   export const SafeAreaView: any;
+  export const Pressable: any;
 }

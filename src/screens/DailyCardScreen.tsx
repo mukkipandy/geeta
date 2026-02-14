@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, Text, View } from 'react-native';
 import { DailyVerseCard } from '../components/DailyVerseCard';
 import { AudioPlayer } from '../components/AudioPlayer';
 import { sampleVerses } from '../content/sampleVerses';
@@ -25,23 +25,33 @@ const demoUser: UserPreferences = {
 export function DailyCardScreen() {
   const { tokens } = useAppTheme();
 
+  const todayISO = useMemo(() => new Date().toISOString(), []);
+
   const verse = useMemo(
     () =>
       selectDailyVerse({
         user: demoUser,
-        date: new Date().toISOString(),
+        date: todayISO,
         verses: sampleVerses
       }),
-    []
+    [todayISO]
   );
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: tokens.background }}>
       <View style={{ flex: 1, padding: 16, gap: 12 }}>
+        <Text style={{ color: tokens.textSecondary, fontSize: 12 }}>
+          Daily Wisdom • {todayISO.slice(0, 10)} • {verse.source.toUpperCase()}
+        </Text>
         <View style={{ flex: 1 }}>
           <DailyVerseCard verse={verse} selectedLanguage={demoUser.preferred_language} animationIntensity="subtle" />
         </View>
-        <AudioPlayer isPlaying={false} speed={demoUser.voice_settings.speed} narrationVolume={1} musicVolume={0.6} />
+        <AudioPlayer
+          isPlaying={false}
+          speed={demoUser.voice_settings.speed}
+          narrationVolume={1}
+          musicVolume={demoUser.music_settings.volume / 100}
+        />
       </View>
     </SafeAreaView>
   );

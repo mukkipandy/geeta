@@ -11,6 +11,7 @@ This repository contains a **TypeScript-first React Native starter architecture*
 - Calm UI scaffold for Daily Card, onboarding, and settings placeholders
 - Audio service scaffolding for narration + ducking-aware music session planning
 - Theme tokens and provider scaffolding for light/dark/pastel modes
+- Conflict-safe consolidated navigation and daily-screen baseline
 
 ## Proposed folder structure
 
@@ -53,6 +54,14 @@ src/
 3. Deterministic randomness using `userId + date` seed
 4. No-repeat exclusion over a configurable lookback window (default 90 days)
 5. Stable fallback behavior when ratios are missing/misaligned
+
+## Navigation state
+
+- `AppNavigator` now includes an interactive in-memory route switcher for:
+  - Onboarding
+  - Daily Card
+  - Settings
+- This keeps the starter runnable without external navigation dependencies while preserving a realistic screen split.
 
 ## Next build steps
 

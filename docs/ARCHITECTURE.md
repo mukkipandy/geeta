@@ -6,7 +6,7 @@
 - **Persistence:** SQLite/Realm abstraction via repository interfaces
 
 ## Navigation
-- Current: lightweight placeholder route switcher in `AppNavigator`
+- Current: dependency-light route switcher in `AppNavigator` with clickable route chips.
 - Planned Root Stack:
   - Onboarding
   - MainTabs
@@ -28,6 +28,14 @@
 - Source-mix ratio is respected with weighted source selection.
 - No-repeat window is enforced from user history with fallback when pool is exhausted.
 - Seven-day cache helper precomputes deterministic verse cards for offline preparation.
+- Daily screen header surfaces date/source context and shares current audio preference values.
+
+## Merge conflict resolution note
+- Consolidated the branch state for the following files into one coherent baseline:
+  - `README.md`
+  - `docs/ARCHITECTURE.md`
+  - `src/navigation/AppNavigator.tsx`
+  - `src/screens/DailyCardScreen.tsx`
 
 ## Extension points
 - Add a spiritual source by:
