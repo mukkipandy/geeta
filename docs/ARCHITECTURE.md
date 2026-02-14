@@ -1,13 +1,18 @@
 # App Architecture (React Native + TypeScript)
 
+## Runtime status
+- This repo is now a runnable React Native scaffold with Metro + Babel + app entry wiring.
+- Navigation and many feature areas remain intentionally dependency-light placeholders.
+
 ## State Management
 - **Local UI + theme state:** React Context
-- **Domain state (future):** Zustand store slices (`content`, `audio`, `preferences`, `sync`)
-- **Persistence:** SQLite/Realm abstraction via repository interfaces
+- **User preference state:** `UserPreferencesStore` context
+- **Domain state (future):** Zustand slices (`content`, `audio`, `preferences`, `sync`)
+- **Persistence (future):** SQLite/Realm abstraction via repository interfaces
 
 ## Navigation
 - Current: dependency-light route switcher in `AppNavigator` with clickable route chips.
-- Provider composition root: `AppRoot` wraps theme + user-preferences stores around navigation.
+- Composition root: `AppRoot` wraps theme + user-preferences stores around navigation.
 - Planned Root Stack:
   - Onboarding
   - MainTabs
@@ -30,16 +35,8 @@
 - Source-mix ratio is respected with weighted source selection.
 - No-repeat window is enforced from user history with fallback when pool is exhausted.
 - Seven-day cache helper precomputes deterministic verse cards for offline preparation.
-- Daily screen header surfaces date/source context and shares current audio preference values.
 - Archive screen uses deterministic 7-day cache generation from current preference state.
 - Onboarding/settings update shared language/music preferences through a central store.
-
-## Merge conflict resolution note
-- Consolidated the branch state for the following files into one coherent baseline:
-  - `README.md`
-  - `docs/ARCHITECTURE.md`
-  - `src/navigation/AppNavigator.tsx`
-  - `src/screens/DailyCardScreen.tsx`
 
 ## Extension points
 - Add a spiritual source by:

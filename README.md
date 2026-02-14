@@ -1,6 +1,6 @@
 # Geeta - Cross-Platform Meditation & Daily Wisdom App (Starter)
 
-This repository contains a **TypeScript-first React Native starter architecture** for a spiritually inclusive daily wisdom app.
+This repository now contains a **runnable React Native TypeScript scaffold** for a spiritually inclusive daily wisdom app.
 
 ## Included in this starter
 
@@ -8,13 +8,13 @@ This repository contains a **TypeScript-first React Native starter architecture*
 - Core data models and sample content fixtures
 - Deterministic daily verse selection algorithm with source mixing ratio + no-repeat window
 - 7-day prefetch cache builder for offline daily verse preparation
-- Calm UI scaffold for Daily Card, onboarding, and settings placeholders
+- Calm UI scaffold for Daily Card, onboarding, archive, and settings placeholders
 - Audio service scaffolding for narration + ducking-aware music session planning
 - Theme tokens and provider scaffolding for light/dark/pastel modes
-- Conflict-safe consolidated navigation and daily-screen baseline
 - Shared user preference store wired across onboarding, daily, archive, and settings
+- React Native runtime entry files and scripts (`index.js`, `App.tsx`, `app.json`, Metro/Babel config)
 
-## Proposed folder structure
+## Project structure
 
 ```text
 src/
@@ -46,9 +46,27 @@ src/
     ThemeProvider.tsx
     tokens.ts
   types/
-    external.d.ts
     models.ts
 ```
+
+## Scripts
+
+- `npm run typecheck` — TypeScript validation
+- `npm run build` — currently mapped to typecheck for this scaffold
+- `npm run start` — starts Metro
+- `npm run android` — attempts Android run (requires Android SDK/device)
+- `npm run ios` — attempts iOS run (requires macOS + Xcode)
+
+## Quick start
+
+1. Install dependencies:
+   - `npm install`
+2. Validate types:
+   - `npm run build`
+3. Start Metro:
+   - `npm run start`
+4. Run app on device/simulator:
+   - `npm run android` or `npm run ios`
 
 ## Core algorithm behavior
 
@@ -60,19 +78,9 @@ src/
 4. No-repeat exclusion over a configurable lookback window (default 90 days)
 5. Stable fallback behavior when ratios are missing/misaligned
 
-## Navigation state
-
-- `AppNavigator` now includes an interactive in-memory route switcher for:
-  - Onboarding
-  - Daily Card
-  - Archive
-  - Settings
-- `AppRoot` composes `AppThemeProvider` + `UserPreferencesProvider` so all screens share preference state.
-- This keeps the starter runnable without external navigation dependencies while preserving a realistic screen split.
-
 ## Next build steps
 
-1. Wire React Navigation stack/tab flows
+1. Replace in-memory navigator with React Navigation stack/tab flows
 2. Integrate persistence (SQLite/Realm)
 3. Add real audio playback engine (`react-native-track-player`) + OS background support
 4. Replace placeholder visuals with Lottie/Rive loops
