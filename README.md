@@ -40,7 +40,13 @@ npm run expo
 Then:
 - Press `a` for Android emulator (if configured)
 - Press `i` for iOS simulator (macOS)
+- Press `w` for browser
 - Or scan QR with Expo Go on physical phone
+
+You can also start browser directly with:
+```bash
+npm run expo:web
+```
 
 ## Alternate React Native CLI scripts (optional)
 
