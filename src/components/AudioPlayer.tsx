@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useAppTheme } from '../theme/ThemeProvider';
 
 interface AudioPlayerProps {
@@ -13,21 +13,46 @@ export function AudioPlayer({ isPlaying, speed, narrationVolume, musicVolume }: 
   const { tokens } = useAppTheme();
 
   return (
-    <View
-      style={{
-        backgroundColor: tokens.card,
-        borderRadius: 14,
-        padding: 12,
-        gap: 8
-      }}
-    >
-      <Text style={{ color: tokens.textPrimary, fontSize: 16 }}>
-        {isPlaying ? 'Playing' : 'Paused'} • {speed.toFixed(2)}x
-      </Text>
+    <View style={[styles.container, { backgroundColor: tokens.card }]}>
+      <Text style={[styles.title, { color: tokens.textPrimary }]}>{isPlaying ? 'Playing' : 'Paused'} • {speed.toFixed(2)}x</Text>
       <Text style={{ color: tokens.textSecondary, fontSize: 13 }}>
         Narration: {Math.round(narrationVolume * 100)}% • Music: {Math.round(musicVolume * 100)}%
       </Text>
-      <Text style={{ color: tokens.textSecondary, fontSize: 13 }}>Controls placeholder: play/pause, seek, dual volume sliders.</Text>
+
+      <View style={styles.row}>
+        <Pressable accessibilityRole="button" style={[styles.button, { backgroundColor: tokens.serenityA }]}>
+          <Text style={{ color: tokens.textPrimary }}>⏮ 15s</Text>
+        </Pressable>
+        <Pressable accessibilityRole="button" style={[styles.button, { backgroundColor: tokens.accent }]}>
+          <Text style={{ color: '#1A1A1A', fontWeight: '700' }}>{isPlaying ? 'Pause' : 'Play'}</Text>
+        </Pressable>
+        <Pressable accessibilityRole="button" style={[styles.button, { backgroundColor: tokens.serenityA }]}>
+          <Text style={{ color: tokens.textPrimary }}>15s ⏭</Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: 14,
+    padding: 12,
+    gap: 10
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: '600'
+  },
+  row: {
+    flexDirection: 'row',
+    gap: 8,
+    justifyContent: 'space-between'
+  },
+  button: {
+    flex: 1,
+    borderRadius: 10,
+    alignItems: 'center',
+    paddingVertical: 8
+  }
+});

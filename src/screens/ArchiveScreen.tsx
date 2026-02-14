@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { buildSevenDayVerseCache } from '../content/VerseCacheManager';
 import { sampleVerses } from '../content/sampleVerses';
 import { useUserPreferencesStore } from '../preferences/UserPreferencesStore';
@@ -21,17 +21,27 @@ export function ArchiveScreen() {
   );
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: tokens.background }} contentContainerStyle={{ padding: 16, gap: 10 }}>
-      <Text style={{ color: tokens.textPrimary, fontSize: 24 }}>Archive (7-Day Preview)</Text>
+    <ScrollView style={{ flex: 1, backgroundColor: tokens.background }} contentContainerStyle={styles.content}>
+      <Text style={[styles.title, { color: tokens.textPrimary }]}>Archive Preview</Text>
+      <Text style={[styles.subtitle, { color: tokens.textSecondary }]}>Deterministic 7-day schedule generated from your current source mix.</Text>
+
       {cachedDays.map((entry) => (
-        <View key={entry.date} style={{ backgroundColor: tokens.card, borderRadius: 12, padding: 12, gap: 4 }}>
-          <Text style={{ color: tokens.textPrimary, fontSize: 14 }}>{entry.date}</Text>
-          <Text style={{ color: tokens.textSecondary, fontSize: 13 }}>
+        <View key={entry.date} style={[styles.card, { backgroundColor: tokens.card }]}> 
+          <Text style={[styles.date, { color: tokens.textPrimary }]}>{entry.date}</Text>
+          <Text style={{ color: tokens.textSecondary }}>
             {entry.verse.book_name} {entry.verse.chapter}:{entry.verse.verse_number}
           </Text>
-          <Text style={{ color: tokens.textSecondary, fontSize: 13 }}>{entry.verse.translation_english}</Text>
+          <Text style={{ color: tokens.textSecondary }}>{entry.verse.translation_english}</Text>
         </View>
       ))}
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  content: { padding: 16, gap: 10 },
+  title: { fontSize: 24, fontWeight: '700' },
+  subtitle: { fontSize: 13 },
+  card: { borderRadius: 12, padding: 12, gap: 4 },
+  date: { fontSize: 14, fontWeight: '600' }
+});

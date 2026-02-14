@@ -9,7 +9,7 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
-export function AppThemeProvider({ children }: { children?: any }) {
+export function AppThemeProvider({ children }: { children?: React.ReactNode }) {
   const [themeName, setThemeName] = useState<ThemeName>('light');
 
   const value = useMemo(

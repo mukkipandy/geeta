@@ -1,18 +1,22 @@
-# Geeta - Cross-Platform Meditation & Daily Wisdom App (Starter)
+# Geeta - Cross-Platform Meditation & Daily Wisdom App
 
-This repository now contains a **runnable React Native TypeScript scaffold** for a spiritually inclusive daily wisdom app.
+A React Native meditation and daily wisdom app designed to feel calm, reflective, and spiritually inclusive.
 
-## Included in this starter
+## What is implemented now
 
-- App architecture and folder layout
-- Core data models and sample content fixtures
-- Deterministic daily verse selection algorithm with source mixing ratio + no-repeat window
-- 7-day prefetch cache builder for offline daily verse preparation
-- Calm UI scaffold for Daily Card, onboarding, archive, and settings placeholders
-- Audio service scaffolding for narration + ducking-aware music session planning
-- Theme tokens and provider scaffolding for light/dark/pastel modes
-- Shared user preference store wired across onboarding, daily, archive, and settings
-- React Native runtime entry files and scripts (`index.js`, `App.tsx`, `app.json`, Metro/Babel config)
+- Runnable React Native app scaffold (Metro + app entry + Babel/TS setup)
+- Real navigation stack using React Navigation:
+  - Onboarding gate
+  - Main tabs: Daily, Archive, Settings
+- Shared user preference store with local persistence via AsyncStorage
+- Theme synchronization from stored preferences (light/dark/pastel)
+- Deterministic daily verse selection with weighted source mixing + no-repeat window
+- Deterministic 7-day archive preview generation
+- Enhanced UI polish across major screens/components:
+  - Breathing-like animated background
+  - Accessible buttons/chips
+  - Structured cards and spacing
+- Audio domain service scaffolding improved with ducking interpolation helper
 
 ## Project structure
 
@@ -52,36 +56,29 @@ src/
 ## Scripts
 
 - `npm run typecheck` — TypeScript validation
-- `npm run build` — currently mapped to typecheck for this scaffold
+- `npm run build` — build check (mapped to typecheck for now)
 - `npm run start` — starts Metro
-- `npm run android` — attempts Android run (requires Android SDK/device)
-- `npm run ios` — attempts iOS run (requires macOS + Xcode)
+- `npm run android` — run Android app (requires Android SDK/emulator)
+- `npm run ios` — run iOS app (requires macOS + Xcode)
 
 ## Quick start
 
-1. Install dependencies:
-   - `npm install`
-2. Validate types:
-   - `npm run build`
-3. Start Metro:
-   - `npm run start`
-4. Run app on device/simulator:
-   - `npm run android` or `npm run ios`
+1. `npm install`
+2. `npm run build`
+3. `npm run start`
+4. In another terminal: `npm run android` or `npm run ios`
 
-## Core algorithm behavior
+## Current limitations (still pending for full production)
 
-`selectDailyVerse` implements:
+- Audio playback UI is wired as UX scaffold; native playback queue/background audio integration is still pending
+- Push notifications scheduler is pending
+- Remote sync/content pipeline is pending
+- Full 1200+ verse dataset and editorial workflow are pending
+- Expanded accessibility features (screen reader labels audit, dyslexic font option, high-contrast toggle) are pending
 
-1. Source filtering based on user preference
-2. Weighted source selection via user ratios
-3. Deterministic randomness using `userId + date` seed
-4. No-repeat exclusion over a configurable lookback window (default 90 days)
-5. Stable fallback behavior when ratios are missing/misaligned
+## Next priority steps
 
-## Next build steps
-
-1. Replace in-memory navigator with React Navigation stack/tab flows
-2. Integrate persistence (SQLite/Realm)
-3. Add real audio playback engine (`react-native-track-player`) + OS background support
-4. Replace placeholder visuals with Lottie/Rive loops
-5. Expand content fixtures + translation packs + remote sync
+1. Integrate `react-native-track-player` with segmented session playback + ducking runtime
+2. Add local DB (SQLite/Realm) and cache repositories
+3. Add notification scheduling and time-zone-safe daily reminders
+4. Expand content and translation packs with source-level quality checks

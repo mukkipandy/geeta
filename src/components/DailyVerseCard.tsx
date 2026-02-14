@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Verse } from '../types/models';
 import { useAppTheme } from '../theme/ThemeProvider';
 import { AnimatedBackground } from './AnimatedBackground';
@@ -19,27 +19,52 @@ export function DailyVerseCard({
 
   return (
     <View
-      style={{
-        flex: 1,
-        backgroundColor: tokens.card,
-        borderRadius: 16,
-        overflow: 'hidden'
-      }}
+      accessibilityRole="summary"
+      accessibilityLabel={`Verse from ${verse.book_name}`}
+      style={[styles.card, { backgroundColor: tokens.card }]}
     >
-      <View style={{ flex: 1 }}>
+      <View style={styles.topPane}>
         <AnimatedBackground tag={verse.animation_tag} intensity={animationIntensity} />
       </View>
 
-      <View style={{ flex: 1, padding: 16, gap: 10 }}>
-        <Text style={{ fontSize: 20, color: tokens.textPrimary }}>{verse.original_text}</Text>
-        <Text style={{ fontSize: 15, color: tokens.textSecondary }}>{verse.translation_english}</Text>
-        <Text style={{ fontSize: 15, color: tokens.textSecondary }}>
+      <View style={styles.bottomPane}>
+        <Text style={[styles.original, { color: tokens.textPrimary }]}>{verse.original_text}</Text>
+        <Text style={[styles.translation, { color: tokens.textSecondary }]}>{verse.translation_english}</Text>
+        <Text style={[styles.translation, { color: tokens.textSecondary }]}>
           {verse.translations[selectedLanguage] ?? verse.translation_english}
         </Text>
-        <Text style={{ fontSize: 13, color: tokens.textSecondary }}>
+        <Text style={[styles.meta, { color: tokens.textSecondary }]}>
           {verse.book_name} {verse.chapter}:{verse.verse_number}
         </Text>
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  card: {
+    flex: 1,
+    borderRadius: 16,
+    overflow: 'hidden'
+  },
+  topPane: {
+    flex: 1
+  },
+  bottomPane: {
+    flex: 1,
+    padding: 16,
+    gap: 10
+  },
+  original: {
+    fontSize: 20,
+    lineHeight: 30
+  },
+  translation: {
+    fontSize: 15,
+    lineHeight: 22
+  },
+  meta: {
+    fontSize: 13,
+    marginTop: 4
+  }
+});

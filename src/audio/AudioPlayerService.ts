@@ -21,10 +21,6 @@ export interface AudioSessionPlan {
   config: AudioDuckingConfig;
 }
 
-/**
- * Stateless planning helper for sequencing the daily audio journey.
- * Hook this into react-native-track-player in Phase 2.
- */
 export class AudioPlayerService {
   createSessionPlan(input: {
     musicProfile: string;
@@ -51,5 +47,13 @@ export class AudioPlayerService {
 
   totalNarrationDurationMs(plan: AudioSessionPlan): number {
     return plan.segments.reduce((sum, segment) => sum + segment.durationMs, 0);
+  }
+
+  /**
+   * Computes ducked music volume over progress [0..1] for smooth transitions.
+   */
+  getDuckedVolume(config: AudioDuckingConfig, progress: number): number {
+    const p = Math.max(0, Math.min(1, progress));
+    return config.musicVolumeNormal + (config.musicVolumeDucked - config.musicVolumeNormal) * p;
   }
 }

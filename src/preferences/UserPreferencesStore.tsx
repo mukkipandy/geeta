@@ -1,5 +1,10 @@
-import React, { createContext, useContext, useMemo, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { ThemeName } from '../theme/tokens';
 import { UserPreferences } from '../types/models';
+
+const PREFERENCES_KEY = 'geeta.user.preferences.v1';
+const ONBOARDING_KEY = 'geeta.user.onboarding.v1';
 
 const defaultPreferences: UserPreferences = {
   user_id: 'demo-user',
@@ -18,19 +23,55 @@ const defaultPreferences: UserPreferences = {
 
 interface UserPreferencesStoreValue {
   preferences: UserPreferences;
+  onboardingCompleted: boolean;
   updatePreferredLanguage: (language: string) => void;
   updateMusicVolume: (volume: number) => void;
+  updateTheme: (theme: ThemeName) => void;
   addHistoryEntry: (entry: UserPreferences['history'][number]) => void;
+  completeOnboarding: () => void;
 }
 
 const UserPreferencesContext = createContext<UserPreferencesStoreValue | undefined>(undefined);
 
-export function UserPreferencesProvider({ children }: { children?: any }) {
+export function UserPreferencesProvider({ children }: { children?: React.ReactNode }) {
   const [preferences, setPreferences] = useState<UserPreferences>(defaultPreferences);
+  const [onboardingCompleted, setOnboardingCompleted] = useState(false);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const [storedPreferences, storedOnboarding] = await Promise.all([
+          AsyncStorage.getItem(PREFERENCES_KEY),
+          AsyncStorage.getItem(ONBOARDING_KEY)
+        ]);
+
+        if (storedPreferences) {
+          setPreferences({ ...defaultPreferences, ...JSON.parse(storedPreferences) });
+        }
+
+        if (storedOnboarding) {
+          setOnboardingCompleted(storedOnboarding === 'true');
+        }
+      } catch {
+        // Keep defaults if hydration fails.
+      }
+    };
+
+    load();
+  }, []);
+
+  useEffect(() => {
+    AsyncStorage.setItem(PREFERENCES_KEY, JSON.stringify(preferences)).catch(() => undefined);
+  }, [preferences]);
+
+  useEffect(() => {
+    AsyncStorage.setItem(ONBOARDING_KEY, onboardingCompleted ? 'true' : 'false').catch(() => undefined);
+  }, [onboardingCompleted]);
 
   const value = useMemo<UserPreferencesStoreValue>(
     () => ({
       preferences,
+      onboardingCompleted,
       updatePreferredLanguage: (language) => {
         setPreferences((prev) => ({ ...prev, preferred_language: language }));
       },
@@ -41,15 +82,21 @@ export function UserPreferencesProvider({ children }: { children?: any }) {
           music_settings: { ...prev.music_settings, volume: bounded }
         }));
       },
+      updateTheme: (theme) => {
+        setPreferences((prev) => ({ ...prev, theme }));
+      },
       addHistoryEntry: (entry) => {
         setPreferences((prev) => ({
           ...prev,
           history: [entry, ...prev.history].slice(0, 365),
           total_verses_read: prev.total_verses_read + (entry.completed ? 1 : 0)
         }));
+      },
+      completeOnboarding: () => {
+        setOnboardingCompleted(true);
       }
     }),
-    [preferences]
+    [onboardingCompleted, preferences]
   );
 
   return <UserPreferencesContext.Provider value={value}>{children}</UserPreferencesContext.Provider>;
