@@ -18,6 +18,110 @@ A React Native meditation and daily wisdom app designed to feel calm, reflective
   - Structured cards and spacing
 - Audio domain service scaffolding improved with ducking interpolation helper
 
+## Important: React Native CLI project (not Expo-managed)
+
+This project is currently a **React Native CLI / bare workflow** app.
+
+- ✅ You can run it on Android/iOS simulators/devices using native tooling.
+- ❌ You cannot open this project directly in **Expo Go** in its current form.
+
+If you specifically want Expo Go testing, we can migrate to an Expo-managed app structure in a follow-up change.
+
+## Local setup and run instructions
+
+### 1) Prerequisites
+
+Install these first:
+
+- Node.js 18+
+- npm 9+
+- Watchman (recommended on macOS)
+- Android Studio + Android SDK + emulator (for Android)
+- Xcode + CocoaPods (for iOS, macOS only)
+
+Official RN environment setup guide:
+- https://reactnative.dev/docs/environment-setup (choose **React Native CLI**)
+
+### 2) Install dependencies
+
+```bash
+npm install
+```
+
+### 3) Validate TypeScript/build health
+
+```bash
+npm run build
+```
+
+### 4) Start Metro
+
+```bash
+npm run start
+```
+
+Keep this terminal running.
+
+### 5) Run on Android (emulator or USB device)
+
+In a second terminal:
+
+```bash
+npm run android
+```
+
+### 6) Run on iOS (macOS only)
+
+In a second terminal:
+
+```bash
+npm run ios
+```
+
+## Testing on a physical mobile device
+
+### Android physical device
+
+1. Enable Developer Options + USB debugging on your phone.
+2. Connect device via USB.
+3. Confirm detection:
+
+```bash
+adb devices
+```
+
+4. Start Metro:
+
+```bash
+npm run start
+```
+
+5. Install/run app:
+
+```bash
+npm run android
+```
+
+### iPhone physical device (macOS)
+
+1. Open the iOS project in Xcode.
+2. Set your Team/signing profile.
+3. Connect iPhone and trust computer.
+4. Build/run from Xcode, with Metro running via:
+
+```bash
+npm run start
+```
+
+## Expo Go question (important)
+
+- This repository is **not configured for Expo Go**.
+- To test with Expo Go, project migration is needed (Expo config/app.json, Expo modules, navigation/runtime adjustments).
+
+If you want, next I can provide:
+1. a minimal Expo-managed migration path, or
+2. a dual workflow strategy (RN CLI + Expo dev client).
+
 ## Project structure
 
 ```text
@@ -60,13 +164,6 @@ src/
 - `npm run start` — starts Metro
 - `npm run android` — run Android app (requires Android SDK/emulator)
 - `npm run ios` — run iOS app (requires macOS + Xcode)
-
-## Quick start
-
-1. `npm install`
-2. `npm run build`
-3. `npm run start`
-4. In another terminal: `npm run android` or `npm run ios`
 
 ## Current limitations (still pending for full production)
 
