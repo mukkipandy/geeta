@@ -1,13 +1,13 @@
 # App Architecture (React Native + TypeScript)
 
 ## Runtime status
-- Runnable React Native baseline with Metro/Babel and app registration.
-- Navigation now uses React Navigation stack + bottom tabs.
+- Expo-enabled React Native app with Expo Go support.
+- Navigation uses React Navigation stack + bottom tabs.
 - User preferences persist locally with AsyncStorage.
 
 ## Navigation
 - Root stack:
-  - `Onboarding` (shown until user completes onboarding)
+  - `Onboarding` (shown until completed)
   - `Main` tabs
 - Main tabs:
   - `Daily`
@@ -15,16 +15,13 @@
   - `Settings`
 
 ## State management
-- `AppThemeProvider`: current visual theme tokens
+- `AppThemeProvider`: visual theme tokens
 - `UserPreferencesStore`:
-  - source and language preferences
+  - source/language preferences
   - audio settings
   - theme preference
   - history data
   - onboarding completion state
-- Persisted keys:
-  - `geeta.user.preferences.v1`
-  - `geeta.user.onboarding.v1`
 
 ## Domain layers
 1. `content/`
@@ -34,22 +31,22 @@
    - 7-day deterministic cache builder
 2. `audio/`
    - session planning abstraction
-   - ducking configuration and interpolation helper
+   - ducking interpolation helper
    - TTS cache-key abstraction
 3. `components/`
-   - reusable cards/selectors/player visuals
+   - reusable card/player/selector UI
 4. `screens/`
-   - onboarding + daily + archive + settings journeys
+   - onboarding + daily + archive + settings
 
 ## Production-readiness progress
 Implemented:
-- real navigation architecture
+- Expo Go testing support
 - persisted preferences
-- improved UI consistency and accessibility annotations
-- deterministic content behavior
+- improved UI consistency
+- deterministic content engine
 
 Pending:
 - native audio playback runtime
 - notifications
 - offline DB repository layer
-- backend sync and larger content operations
+- backend sync + content operations

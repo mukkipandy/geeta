@@ -2,45 +2,22 @@
 
 A React Native meditation and daily wisdom app designed to feel calm, reflective, and spiritually inclusive.
 
-## What is implemented now
+## Expo Go support (added)
 
-- Runnable React Native app scaffold (Metro + app entry + Babel/TS setup)
-- Real navigation stack using React Navigation:
-  - Onboarding gate
-  - Main tabs: Daily, Archive, Settings
-- Shared user preference store with local persistence via AsyncStorage
-- Theme synchronization from stored preferences (light/dark/pastel)
-- Deterministic daily verse selection with weighted source mixing + no-repeat window
-- Deterministic 7-day archive preview generation
-- Enhanced UI polish across major screens/components:
-  - Breathing-like animated background
-  - Accessible buttons/chips
-  - Structured cards and spacing
-- Audio domain service scaffolding improved with ducking interpolation helper
+This project now supports **Expo Go** testing.
 
-## Important: React Native CLI project (not Expo-managed)
+- Start the Expo dev server:
+  - `npm run expo` (or `npm start`)
+- Open Expo Go on your phone and scan the QR code.
 
-This project is currently a **React Native CLI / bare workflow** app.
-
-- ✅ You can run it on Android/iOS simulators/devices using native tooling.
-- ❌ You cannot open this project directly in **Expo Go** in its current form.
-
-If you specifically want Expo Go testing, we can migrate to an Expo-managed app structure in a follow-up change.
-
-## Local setup and run instructions
+## Quick local run (Expo Go)
 
 ### 1) Prerequisites
 
-Install these first:
-
 - Node.js 18+
 - npm 9+
-- Watchman (recommended on macOS)
-- Android Studio + Android SDK + emulator (for Android)
-- Xcode + CocoaPods (for iOS, macOS only)
-
-Official RN environment setup guide:
-- https://reactnative.dev/docs/environment-setup (choose **React Native CLI**)
+- Expo Go app installed on your mobile device (Android/iOS)
+- Same Wi-Fi network for computer and phone (or use tunnel mode)
 
 ### 2) Install dependencies
 
@@ -48,134 +25,47 @@ Official RN environment setup guide:
 npm install
 ```
 
-### 3) Validate TypeScript/build health
+### 3) Type-check
 
 ```bash
 npm run build
 ```
 
-### 4) Start Metro
+### 4) Start Expo
 
 ```bash
-npm run start
+npm run expo
 ```
 
-Keep this terminal running.
+Then:
+- Press `a` for Android emulator (if configured)
+- Press `i` for iOS simulator (macOS)
+- Or scan QR with Expo Go on physical phone
 
-### 5) Run on Android (emulator or USB device)
+## Alternate React Native CLI scripts (optional)
 
-In a second terminal:
+If you still want RN CLI commands:
 
-```bash
-npm run android
-```
+- `npm run start:rn`
+- `npm run android:rn`
+- `npm run ios:rn`
 
-### 6) Run on iOS (macOS only)
+> Note: Expo Go is the recommended testing path for this repository now.
 
-In a second terminal:
+## Implemented app features
 
-```bash
-npm run ios
-```
+- React Navigation stack + tabs (Onboarding, Daily, Archive, Settings)
+- Persisted preferences via AsyncStorage
+- Theme switching and persisted theme sync
+- Deterministic daily verse selection with source mix ratio + no-repeat logic
+- 7-day deterministic archive preview
+- Improved UI polish across onboarding/settings/daily/archive
+- Audio/TTS service scaffolding for next-phase runtime integration
 
-## Testing on a physical mobile device
+## Current limitations (pending for full production)
 
-### Android physical device
-
-1. Enable Developer Options + USB debugging on your phone.
-2. Connect device via USB.
-3. Confirm detection:
-
-```bash
-adb devices
-```
-
-4. Start Metro:
-
-```bash
-npm run start
-```
-
-5. Install/run app:
-
-```bash
-npm run android
-```
-
-### iPhone physical device (macOS)
-
-1. Open the iOS project in Xcode.
-2. Set your Team/signing profile.
-3. Connect iPhone and trust computer.
-4. Build/run from Xcode, with Metro running via:
-
-```bash
-npm run start
-```
-
-## Expo Go question (important)
-
-- This repository is **not configured for Expo Go**.
-- To test with Expo Go, project migration is needed (Expo config/app.json, Expo modules, navigation/runtime adjustments).
-
-If you want, next I can provide:
-1. a minimal Expo-managed migration path, or
-2. a dual workflow strategy (RN CLI + Expo dev client).
-
-## Project structure
-
-```text
-src/
-  AppRoot.tsx
-  audio/
-    AudioPlayerService.ts
-    TTSService.ts
-  components/
-    AnimatedBackground.tsx
-    AudioPlayer.tsx
-    DailyVerseCard.tsx
-    LanguageSelector.tsx
-    SourceMixer.tsx
-  content/
-    sampleVerses.ts
-    seededRandom.ts
-    selectDailyVerse.ts
-    VerseCacheManager.ts
-  navigation/
-    AppNavigator.tsx
-  screens/
-    ArchiveScreen.tsx
-    DailyCardScreen.tsx
-    OnboardingFlow.tsx
-    SettingsScreen.tsx
-  preferences/
-    UserPreferencesStore.tsx
-  theme/
-    ThemeProvider.tsx
-    tokens.ts
-  types/
-    models.ts
-```
-
-## Scripts
-
-- `npm run typecheck` — TypeScript validation
-- `npm run build` — build check (mapped to typecheck for now)
-- `npm run start` — starts Metro
-- `npm run android` — run Android app (requires Android SDK/emulator)
-- `npm run ios` — run iOS app (requires macOS + Xcode)
-
-## Current limitations (still pending for full production)
-
-- Audio playback UI is wired as UX scaffold; native playback queue/background audio integration is still pending
-- Push notifications scheduler is pending
-- Remote sync/content pipeline is pending
-- Full 1200+ verse dataset and editorial workflow are pending
-- Expanded accessibility features (screen reader labels audit, dyslexic font option, high-contrast toggle) are pending
-
-## Next priority steps
-
-1. Integrate `react-native-track-player` with segmented session playback + ducking runtime
-2. Add local DB (SQLite/Realm) and cache repositories
-3. Add notification scheduling and time-zone-safe daily reminders
-4. Expand content and translation packs with source-level quality checks
+- Native background audio queue/ducking runtime integration
+- Notification scheduling
+- Offline DB repository + backend sync pipeline
+- Full content expansion and editorial review workflow
+- Full accessibility audit/features

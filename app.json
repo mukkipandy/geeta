@@ -1,4 +1,21 @@
 {
-  "name": "Geeta",
-  "displayName": "Geeta"
+  "expo": {
+    "name": "Geeta",
+    "slug": "geeta",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "scheme": "geeta",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#FFFEF7"
+      }
+    }
+  }
 }
